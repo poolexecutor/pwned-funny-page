@@ -17,11 +17,12 @@
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
             color: #00ff00;
-            overflow: hidden;
-            height: 100vh;
+            overflow-x: hidden;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 10px;
         }
 
         @keyframes gradientShift {
@@ -32,25 +33,29 @@
 
         .container {
             text-align: center;
-            padding: 40px;
+            padding: clamp(20px, 5vw, 40px);
             background: rgba(0, 0, 0, 0.8);
             border: 3px solid #00ff00;
             border-radius: 10px;
             box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
             animation: pulse 2s infinite;
             max-width: 600px;
+            width: 100%;
+            margin: 20px auto;
         }
 
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 50px rgba(0, 255, 0, 0.5); }
-            50% { box-shadow: 0 0 80px rgba(0, 255, 0, 0.8); }
+            0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 0, 0.5); }
+            50% { box-shadow: 0 0 50px rgba(0, 255, 0, 0.8); }
         }
 
         h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
+            font-size: clamp(1.5em, 6vw, 3em);
+            margin-bottom: 15px;
             text-shadow: 0 0 10px #00ff00;
             animation: glitch 1s infinite;
+            word-wrap: break-word;
+            line-height: 1.2;
         }
 
         @keyframes glitch {
@@ -62,19 +67,19 @@
         }
 
         .skull {
-            font-size: 5em;
-            margin: 20px 0;
+            font-size: clamp(3em, 12vw, 5em);
+            margin: 15px 0;
             animation: float 3s ease-in-out infinite;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-15px); }
         }
 
         p {
-            font-size: 1.2em;
-            margin: 15px 0;
+            font-size: clamp(0.9em, 3.5vw, 1.2em);
+            margin: 12px 0;
             line-height: 1.6;
         }
 
@@ -89,25 +94,48 @@
 
         .code {
             background: rgba(0, 255, 0, 0.1);
-            padding: 15px;
-            margin: 20px 0;
+            padding: clamp(10px, 3vw, 15px);
+            margin: 15px 0;
             border-left: 4px solid #00ff00;
             text-align: left;
-            font-size: 0.9em;
+            font-size: clamp(0.7em, 2.5vw, 0.9em);
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .code::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .code::-webkit-scrollbar-track {
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .code::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border-radius: 3px;
         }
 
         .warning {
             color: #ff0000;
             font-weight: bold;
             animation: blink 0.5s infinite;
-            margin-top: 20px;
+            margin-top: 15px;
+            font-size: clamp(0.9em, 3.5vw, 1.2em);
+        }
+
+        .tips {
+            font-size: clamp(0.85em, 3vw, 1em);
+            line-height: 1.8;
         }
 
         .footer {
-            margin-top: 30px;
-            font-size: 0.8em;
+            margin-top: 20px;
+            font-size: clamp(0.7em, 2.5vw, 0.8em);
             color: #00ff00;
             opacity: 0.7;
+            line-height: 1.6;
         }
 
         .matrix {
@@ -119,6 +147,84 @@
             pointer-events: none;
             opacity: 0.1;
             z-index: -1;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+
+            .container {
+                border-width: 2px;
+                margin: 10px auto;
+            }
+
+            h1 {
+                margin-bottom: 10px;
+            }
+
+            .skull {
+                margin: 10px 0;
+            }
+
+            .code {
+                font-size: 0.75em;
+                padding: 10px;
+            }
+
+            @keyframes pulse {
+                0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); }
+                50% { box-shadow: 0 0 35px rgba(0, 255, 0, 0.8); }
+            }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .code {
+                font-size: 0.7em;
+                padding: 8px;
+                margin: 10px 0;
+            }
+
+            p {
+                margin: 10px 0;
+            }
+        }
+
+        /* Landscape mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 5px;
+            }
+
+            .container {
+                padding: 15px;
+                margin: 10px auto;
+            }
+
+            .skull {
+                font-size: 2.5em;
+                margin: 5px 0;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 8px;
+            }
+
+            p, .tips {
+                margin: 8px 0;
+            }
+        }
+
+        /* Prevent zoom on iOS */
+        input, select, textarea {
+            font-size: 16px;
         }
     </style>
 </head>
@@ -134,20 +240,18 @@
         
         <p class="blink">⚠️ SYSTEM COMPROMISED ⚠️</p>
         
-        <div class="code">
-            > Initiating hack sequence...<br>
-            > Bypassing firewall... [OK]<br>
-            > Accessing mainframe... [OK]<br>
-            > Downloading cat videos... [OK]<br>
-            > Replacing important files with memes... [OK]<br>
-            > pwn.exe executed successfully! 🎉
-        </div>
+        <div class="code">> Initiating hack sequence...
+> Bypassing firewall... [OK]
+> Accessing mainframe... [OK]
+> Downloading cat videos... [OK]
+> Replacing files with memes... [OK]
+> pwn.exe executed! 🎉</div>
                 
-        <p>Remember to always:</p>
-        <p>✅ Keep your software updated<br>
+        <p class="tips">Remember to always:</p>
+        <p class="tips">✅ Keep software updated<br>
         ✅ Use strong passwords<br>
-        ✅ Enable two-factor authentication<br>
-        ✅ Be cautious of suspicious links</p>
+        ✅ Enable 2FA<br>
+        ✅ Avoid suspicious links</p>
         
         <p class="warning">⚠️ STAY SAFE ONLINE! ⚠️</p>
         
@@ -158,17 +262,22 @@
     </div>
 
     <script>
-        // Matrix rain effect
+        // Matrix rain effect with mobile optimization
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
         
         const chars = '01';
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
+        const fontSize = window.innerWidth < 768 ? 10 : 14;
+        const columns = Math.floor(canvas.width / fontSize);
+        const drops = Array(columns).fill(1);
         
         function drawMatrix() {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
@@ -188,7 +297,20 @@
             }
         }
         
-        setInterval(drawMatrix, 50);
+        // Adjust frame rate for mobile performance
+        const isMobile = window.innerWidth < 768;
+        const interval = isMobile ? 60 : 50;
+        setInterval(drawMatrix, interval);
+
+        // Prevent double-tap zoom on iOS
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
 </html>
